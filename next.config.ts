@@ -10,10 +10,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // 静的アセットのパスを修正
-  publicRuntimeConfig: {
-    basePath: process.env.NODE_ENV === 'production' ? `/${process.env.REPOSITORY_NAME}` : ''
-  }
 }
 
 module.exports = nextConfig

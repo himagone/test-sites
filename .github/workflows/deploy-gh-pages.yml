@@ -10,7 +10,7 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/deploy-pages@v4
+    - uses: actions/checkout@v2
 
     # Node.js環境のセットアップを行う
     - name: setup node

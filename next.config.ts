@@ -9,7 +9,7 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
-    path: "/",
+    path: `/${process.env.REPOSITORY_NAME}/images`,
   },
 }
 

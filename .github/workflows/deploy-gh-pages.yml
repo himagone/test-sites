@@ -4,22 +4,20 @@ on:
   push:
     branches:
     - main
-  # 手動実行オプション追加
   workflow_dispatch:
 
 jobs:
   build-deploy:
-    runs-on: ubuntu-latest  # 最新バージョンに変更
-    # 権限を明示的に設定
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-    - uses: actions/checkout@v3  # 新しいバージョン
+    - uses: actions/checkout@v3
 
     - name: setup node
       uses: actions/setup-node@v3
       with:
-        node-version: '16.x'  # 新しいバージョン
+        node-version: '20.x'  # Node.jsのバージョンを20に更新
         cache: 'npm'
 
     - name: install

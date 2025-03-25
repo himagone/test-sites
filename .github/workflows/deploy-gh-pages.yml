@@ -32,12 +32,13 @@ jobs:
 
       - name: Build
         run: npm run build
+      - name: Export static files
+        run: |
+          npm run export || npm run next export
+          touch out/.nojekyll
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
-
-      - name: add nojekyll
-        run: touch ./out/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

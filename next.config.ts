@@ -6,6 +6,10 @@ const nextConfig = {
   env: {
     REPOSITORY_NAME: process.env.REPOSITORY_NAME,
   },
+  images: {
+    unoptimized: true,
+    path: `/${process.env.REPOSITORY_NAME}/images`,
+  },
 }
 
 module.exports = nextConfig

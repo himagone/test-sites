@@ -2,7 +2,9 @@
 const nextConfig = {
   output: 'export',
   basePath: `/${process.env.REPOSITORY_NAME}`,
-  assetPrefix: `/${process.env.REPOSITORY_NAME}`,
+  images: {
+    unoptimized: true,
+  },
 }
 
 module.exports = nextConfig

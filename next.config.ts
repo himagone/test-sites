@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  basePath: `/${process.env.REPOSITORY_NAME}`,
+  basePath: `/${process.env.REPOSITORY_NAME}/`,
   assetPrefix: `/${process.env.REPOSITORY_NAME}/`,
   // 環境変数をクライアントサイドでも使えるようにする
   env: {

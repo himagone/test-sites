@@ -1,10 +1,11 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-    output: "export",
-    experimental: {
-        optimizePackageImports: ["@chakra-ui/react"],
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+    output: 'export',
+    basePath: process.env.NODE_ENV === 'production' ? `/${process.env.REPOSITORY_NAME}` : '',
+    assetPrefix: process.env.NODE_ENV === 'production' ? `/${process.env.REPOSITORY_NAME}/` : '',
+    images: {
+      unoptimized: true,
     },
-};
-
-export default nextConfig;
+  }
+  
+  module.exports = nextConfig

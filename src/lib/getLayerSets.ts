@@ -20,7 +20,7 @@ export const getLayerSets = async (rootTextFileUrl: string): Promise<LayerGroupI
                 type: "LayerGroup",
                 id: crypto.randomUUID(),
                 title: data.title,
-                iconUrl: data.iconUrl ? url.origin + data.iconUrl?.slice(1) : undefined,
+                iconUrl: data.iconUrl ? (URL.canParse(data.iconUrl) ? data.iconUrl : url.origin + data.iconUrl.slice(1)) : undefined,
                 items,
             };
         }
@@ -33,7 +33,7 @@ export const getLayerSets = async (rootTextFileUrl: string): Promise<LayerGroupI
                 type: "LayerGroup",
                 id: crypto.randomUUID(),
                 title: data.title,
-                iconUrl: data.iconUrl,
+                iconUrl: data.iconUrl ? (URL.canParse(data.iconUrl) ? data.iconUrl : url.origin + data.iconUrl.slice(1)) : undefined,
                 items,
             };
         }
@@ -61,13 +61,14 @@ export const getLayerSets = async (rootTextFileUrl: string): Promise<LayerGroupI
 
         if (data.url.endsWith("{z}/{x}/{y}.png") || data.url.endsWith("{z}/{x}/{y}.jpg") || data.url.startsWith("pmtiles://")) {
             const id = crypto.randomUUID();
+            const tileUrl = URL.canParse(data.url) ? data.url : url.origin + data.url.slice(1);
             return {
                 type: "Layer",
                 id,
                 title: data.title,
                 source: {
                     type: "raster",
-                    tiles: [data.url],
+                    tiles: [tileUrl],
                     maxzoom: data.maxzoom,
                     minzoom: data.minzoom,
                 },

@@ -1,0 +1,41 @@
+name: Receive and sync target files
+on:
+  repository_dispatch:
+    types: [target-updated]
+
+jobs:
+  sync-target:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout receiving repo
+        uses: actions/checkout@v3
+        with:
+          repository: himagone/test-sites
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Clone source repo
+        uses: actions/checkout@v3
+        with:
+          repository: himagone/test-site-private
+          token: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+          path: source-repo
+          ref: ${{ github.event.client_payload.ref || 'main' }}
+
+      - name: Copy updated files
+        run: |
+          for file in ${{ github.event.client_payload.changed_files }}; do
+            mkdir -p "$(dirname "$file")"
+            cp "source-repo/$file" "$file"
+          done
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'Sync updated files from source repo'
+          branch: sync/target-updated
+          branch-suffix: ${{ github.event.client_payload.timestamp }}
+          title: '🛠 Sync target.yml from upstream'
+          delete-branch: true
+          labels: automated, sync

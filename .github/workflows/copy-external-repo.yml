@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout receiving repo
         uses: actions/checkout@v3
+        with:
+          persist-credentials: true
       - name: Clone source repo
         uses: actions/checkout@v3
         with:
@@ -24,13 +26,13 @@ jobs:
             mkdir -p "$(dirname "$file")"
             cp "source-repo/$file" "$file"
           done
+      - name: Configure Git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ secrets.DISPATCH_TOKEN }}
-          commit-message: 'Sync updated files from source repo'
-          branch: main
-          title: '🛠 Sync target.yml from upstream'
-          delete-branch: true
-          labels: automated, sync
+      - name: Commit and push to main
+        run: |
+          git add .
+          git diff --quiet || git commit -m "🛠 Sync target files from upstream"
+          git push origin main

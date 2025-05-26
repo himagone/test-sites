@@ -20,13 +20,11 @@ jobs:
           token: ${{ secrets.DISPATCH_TOKEN }}
           path: source-repo
           ref: main
-
-      - name: Copy updated files
+      - name: Copy updated files with rsync
         run: |
-          for file in ${{ github.event.client_payload.changed_files }}; do
-            mkdir -p "$(dirname "$file")"
-            cp "source-repo/$file" "$file"
-          done
+          echo "${{ github.event.client_payload.changed_files }}" \
+            | tr ',' '\n' > files.txt
+          rsync -av --files-from=files.txt source-repo/ .
       - name: Remove nested git metadata
         run: rm -rf source-repo/.git
       - name: Configure Git user

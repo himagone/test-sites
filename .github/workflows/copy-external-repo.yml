@@ -35,5 +35,5 @@ jobs:
       - name: Commit and push to main
         run: |
           git add .
-          git diff --quiet || git commit -m "🛠 Sync target files from upstream"
+          git diff --cached --quiet || git commit -m "🛠 Sync target files from upstream"
           git push origin main

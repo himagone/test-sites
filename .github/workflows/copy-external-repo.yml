@@ -26,7 +26,7 @@ jobs:
             | tr ',' '\n' > files.txt
           rsync -av --files-from=files.txt source-repo/ .
       - name: Remove nested git metadata
-        run: rm -rf source-repo/.git
+        run: rm -rf source-repo
       - name: Configure Git user
         run: |
           git config user.name "github-actions[bot]"

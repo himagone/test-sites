@@ -2,7 +2,8 @@ name: Receive and sync target files
 on:
   repository_dispatch:
     types: [target-updated]
-
+permissions:
+  contents: write
 jobs:
   sync-target:
     runs-on: ubuntu-latest
@@ -18,7 +19,7 @@ jobs:
           repository: himagone/test-site-private
           token: ${{ secrets.DISPATCH_TOKEN }}
           path: source-repo
-          ref: ${{ 'main' }}
+          ref: main
 
       - name: Copy updated files
         run: |
@@ -26,6 +27,8 @@ jobs:
             mkdir -p "$(dirname "$file")"
             cp "source-repo/$file" "$file"
           done
+      - name: Remove nested git metadata
+        run: rm -rf source-repo/.git
       - name: Configure Git user
         run: |
           git config user.name "github-actions[bot]"

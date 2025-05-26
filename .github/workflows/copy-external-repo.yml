@@ -10,10 +10,6 @@ jobs:
     steps:
       - name: Checkout receiving repo
         uses: actions/checkout@v3
-        with:
-          repository: himagone/test-sites
-          token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Clone source repo
         uses: actions/checkout@v3
         with:

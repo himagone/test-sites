@@ -28,7 +28,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_ACCESS_TOKEN }}
           commit-message: 'Sync updated files from source repo'
           branch: sync/target-updated
           branch-suffix: ${{ github.event.client_payload.timestamp }}
